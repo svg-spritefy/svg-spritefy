@@ -1,1 +1,1 @@
-export * from './lib/core';
+export * from './lib/symbol-mapper/symbol-mapper';
