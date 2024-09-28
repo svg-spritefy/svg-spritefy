@@ -1,0 +1,16 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../dist/out-tsc",
+    "declaration": true,
+    "types": ["node", "vite/client"]
+  },
+  "include": [
+    "core/src/**/*.ts"
+  ],
+  "exclude": [
+    "vite.config.ts",
+    "core/src/**/*.spec.ts",
+    "core/src/**/*.test.ts"
+  ]
+}
