@@ -1,9 +1,10 @@
 import { optimize, PluginConfig } from 'svgo'
+import { Symbols } from '../symbols.type'
 
 export class SymbolMapper {
-	#symbols: Record<string, string> = {}
+	readonly #symbols: Symbols
 
-	#svgoConfig: PluginConfig[] = [
+	readonly #svgoConfig: PluginConfig[] = [
 		'removeXMLNS',
 		'removeDimensions',
 		{
@@ -20,6 +21,10 @@ export class SymbolMapper {
 		},
 	]
 
+	constructor(initial: Symbols = {}) {
+		this.#symbols = initial
+	}
+
 	get names(): string[] {
 		return Object.keys(this.#symbols)
 	}
@@ -34,6 +39,12 @@ export class SymbolMapper {
 
 	delete(name: string): this {
 		delete this.#symbols[name]
+
+		return this
+	}
+
+	prune(names: string[]): this {
+		for (const name of names) delete this.#symbols[name]
 
 		return this
 	}
