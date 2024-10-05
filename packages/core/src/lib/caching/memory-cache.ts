@@ -1,4 +1,4 @@
-import { Symbols } from '../symbols.type';
+import { Symbols } from '../symbols.type'
 import { Cache } from './cache.interface'
 
 export class MemoryCache implements Cache {
@@ -6,6 +6,10 @@ export class MemoryCache implements Cache {
 
 	get(name: string): Promise<Symbols | undefined> {
 		return Promise.resolve(this.#store.get(name))
+	}
+
+	has(name: string): Promise<boolean> {
+		return Promise.resolve(this.#store.has(name))
 	}
 
 	set(name: string, symbols: Symbols): Promise<void> {
@@ -21,9 +25,8 @@ export class MemoryCache implements Cache {
 	}
 
 	clear(): Promise<void> {
-		this.#store.clear();
+		this.#store.clear()
 
 		return Promise.resolve()
 	}
-
 }

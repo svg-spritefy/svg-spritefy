@@ -19,6 +19,18 @@ export class CacheManager implements Cache {
 		return file
 	}
 
+	async has(name: string): Promise<boolean> {
+		const hasMemory = await this.#memoryCache.has(name)
+
+		if (hasMemory) return true
+
+		const file = await this.#fileCache.get(name)
+
+		if (file) await this.#memoryCache.set(name, file)
+
+		return !!file
+	}
+
 	async set(name: string, symbols: Symbols): Promise<void> {
 		await Promise.all([this.#memoryCache.set(name, symbols), this.#fileCache.set(name, symbols)])
 	}

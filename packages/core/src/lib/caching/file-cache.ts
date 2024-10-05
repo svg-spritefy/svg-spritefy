@@ -1,7 +1,7 @@
-import { Symbols } from '../symbols.type'
-import { Cache } from './cache.interface'
 import { access, mkdir, readFile, rm, writeFile } from 'node:fs/promises'
 import { dirname, join, resolve } from 'node:path'
+import { Symbols } from '../symbols.type'
+import { Cache } from './cache.interface'
 
 export class FileCache implements Cache {
 	#cacheDir = resolve(__dirname, '../.cache')
@@ -13,6 +13,15 @@ export class FileCache implements Cache {
 			return JSON.parse(file)
 		} catch {
 			return undefined
+		}
+	}
+
+	async has(name: string): Promise<boolean> {
+		try {
+			await access(join(this.#cacheDir, name))
+			return true
+		} catch {
+			return false
 		}
 	}
 
