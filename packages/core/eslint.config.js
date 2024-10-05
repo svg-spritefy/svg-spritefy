@@ -1,22 +1,24 @@
-const baseConfig = require('../../eslint.config.js');
+import baseConfig from '../../eslint.config.js'
+import parser from 'jsonc-eslint-parser'
 
-module.exports = [
-  ...baseConfig,
-  {
-    files: ['**/*.json'],
-    rules: {
-      '@nx/dependency-checks': [
-        'error',
-        {
-          ignoredFiles: [
-            '{projectRoot}/eslint.config.{js,cjs,mjs}',
-            '{projectRoot}/vite.config.{js,ts,mjs,mts}',
-          ],
-        },
-      ],
-    },
-    languageOptions: {
-      parser: require('jsonc-eslint-parser'),
-    },
-  },
-];
+/**
+ * @type{import('eslint').Linter.Config[]}
+ */
+export default [
+	...baseConfig,
+	{
+		files: ['**/*.json'],
+		rules: {
+			'@nx/dependency-checks': [
+				'error',
+				{
+					ignoredFiles: [
+						'{projectRoot}/eslint.config.{js,cjs,mjs}',
+						'{projectRoot}/vite.config.{js,ts,mjs,mts}',
+					],
+				},
+			],
+		},
+		languageOptions: { parser },
+	},
+]
