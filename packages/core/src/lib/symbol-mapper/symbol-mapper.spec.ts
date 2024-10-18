@@ -29,7 +29,8 @@ describe('SymbolMapper class', () => {
 	it('produces a correct string representation', () => {
 		const name = 'example'
 		const svg = '<svg><path d="M0 0h100v100H0z"/></svg>'
-		const expected = '<symbol id="example"><path d="M0 0h100v100H0z"/></symbol>'
+		const expected =
+			'<svg xmlns="http://www.w3.org/2000/svg"><symbol id="example"><path d="M0 0h100v100H0z"/></symbol></svg>'
 
 		symbolMapper.add(name, svg)
 		const result = symbolMapper.toSvgContent()
