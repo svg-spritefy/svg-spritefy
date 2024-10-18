@@ -1,12 +1,18 @@
 import { Config as SvgoConfig, optimize, PluginConfig } from 'svgo'
-import { Symbols } from '../symbols.type'
 import { convertToSymbolPlugin } from '../svgo-plugins/convert-to-symbol-plugin'
 import { svgoDefaultPlugins } from '../svgo-plugins/svgo-default-plugins'
-
-
+import { Symbols } from '../symbols.type'
 
 export class SymbolMapper {
-	#symbols: Symbols
+	static merge(...mappers: SymbolMapper[]): SymbolMapper {
+		const newMapper = new SymbolMapper()
+
+		for (const mapper of mappers) newMapper.addSymbols(mapper.symbols)
+
+		return newMapper
+	}
+
+	readonly #symbols: Symbols
 
 	readonly #svgoPlugins: PluginConfig[]
 
@@ -29,8 +35,10 @@ export class SymbolMapper {
 		return this
 	}
 
-	merge(symbolMapper: SymbolMapper): void {
-		this.#symbols = Object.assign(this.#symbols, symbolMapper.#symbols)
+	addSymbols(symbols: Symbols): this {
+		Object.assign(this.#symbols, symbols)
+
+		return this
 	}
 
 	delete(name: string): this {
@@ -45,8 +53,8 @@ export class SymbolMapper {
 		return this
 	}
 
-	toString(): string {
-		return Object.values(this.#symbols).join('')
+	toSvgContent(): string {
+		return `<svg xmlns="http://www.w3.org/2000/svg">${Object.values(this.#symbols).join('')}</svg>`
 	}
 
 	#getSvgoConfig(name: string): SvgoConfig {

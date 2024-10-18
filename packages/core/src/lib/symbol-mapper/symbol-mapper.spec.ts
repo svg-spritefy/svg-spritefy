@@ -1,5 +1,5 @@
-import { SymbolMapper } from './symbol-mapper'
 import { describe, expect, it } from 'vitest'
+import { SymbolMapper } from './symbol-mapper'
 
 describe('SymbolMapper class', () => {
 	let symbolMapper: SymbolMapper
@@ -32,7 +32,7 @@ describe('SymbolMapper class', () => {
 		const expected = '<symbol id="example"><path d="M0 0h100v100H0z"/></symbol>'
 
 		symbolMapper.add(name, svg)
-		const result = symbolMapper.toString()
+		const result = symbolMapper.toSvgContent()
 		expect(result).toBe(expected)
 	})
 
