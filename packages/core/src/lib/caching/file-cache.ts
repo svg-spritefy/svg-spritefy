@@ -1,10 +1,11 @@
 import { access, mkdir, readFile, rm, writeFile } from 'node:fs/promises'
 import { dirname, join, resolve } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import { Symbols } from '../symbols.type'
 import { Cache } from './cache.interface'
 
 export class FileCache implements Cache {
-	#cacheDir = resolve(__dirname, '../.cache')
+	#cacheDir = resolve(dirname(fileURLToPath(import.meta.url)), '../.cache')
 
 	async get(name: string): Promise<Symbols | undefined> {
 		try {
