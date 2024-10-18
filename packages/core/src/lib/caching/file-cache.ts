@@ -5,7 +5,7 @@ import { Symbols } from '../symbols.type'
 import { Cache } from './cache.interface'
 
 export class FileCache implements Cache {
-	#cacheDir = resolve(dirname(fileURLToPath(import.meta.url)), '../.cache')
+	#cacheDir = resolve(dirname(fileURLToPath(import.meta.url)), '.cache')
 
 	async get(name: string): Promise<Symbols | undefined> {
 		try {
